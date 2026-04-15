@@ -279,7 +279,7 @@ set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[24] -
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[26] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[27] -to auto_signaltap_0|gnd -section_id auto_signaltap_0
 set_instance_assignment -name POST_FIT_CONNECT_TO_SLD_NODE_ENTITY_PORT crc[31] -to auto_signaltap_0|vcc -section_id auto_signaltap_0
-set_global_assignment -name VHDL_FILE peripheral.vhd
+set_global_assignment -name VHDL_FILE ADC_peripheral.vhd
 set_global_assignment -name VHDL_FILE HEX_DISP.vhd
 set_global_assignment -name VHDL_FILE DIG_OUT.vhd
 set_global_assignment -name VHDL_FILE DIG_IN.vhd

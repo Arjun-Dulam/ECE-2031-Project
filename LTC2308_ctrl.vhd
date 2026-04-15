@@ -183,19 +183,22 @@ begin
 				end if;
 					 
 			elsif state = TRANSFER then
-				-- Sample MISO on rising edges. Latch rx_data on the final bit here,
-				-- because SCLK stops toggling once the controller moves into HOLD.
+				-- Sample MISO on rising edges
 				if sclk_rise = '1' then
 					rx_reg <= rx_reg(10 downto 0) & miso;
-					if bit_cnt = 0 then
-						rx_data <= rx_reg(10 downto 0) & miso;
-					end if;
 				end if;
 					 
 				-- Shift MOSI on falling edges.
 				if sclk_fall = '1' then
 					tx_reg <= tx_reg(10 downto 0) & '0';
 					mosi   <= tx_reg(10); -- Put the next MSB onto the line
+				end if;
+					 
+			elsif state = HOLD then
+				-- Once the last bit is shifted, latch received data onto
+				-- the output bus.
+				if sclk_fall = '1' then
+					rx_data <= rx_reg;
 				end if;
 			end if;
 			

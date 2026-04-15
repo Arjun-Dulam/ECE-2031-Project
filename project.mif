@@ -5,6 +5,51 @@ ADDRESS_RADIX=HEX;
 DATA_RADIX=HEX;
 
 CONTENT BEGIN
-[0000..07FF] : 0000; -- [empty memory]
+0000: 90C0; -- POLL_ADC:   IN   ADC_DATA   ; Grab the latest 12-bit sample (0-4095)
+0001: 1027; --             STORE REMAIND   ; This is our "Input" for the division logic
+0002: 1800; --             LOADI 0
+0003: 1028; --             STORE THOUS
+0004: 1029; --             STORE HUNDS
+0005: 102A; --             STORE TENS
+0006: 0827; -- T_LOOP:     LOAD  REMAIND
+0007: 282B; --             SUB   C_1000
+0008: 600E; --             JNEG  T_DONE
+0009: 1027; --             STORE REMAIND
+000A: 0828; --             LOAD  THOUS
+000B: 3001; --             ADDI  1
+000C: 1028; --             STORE THOUS
+000D: 5806; --             JUMP  T_LOOP
+000E: 0827; --             LOAD  REMAIND
+000F: 282C; --             SUB   C_100
+0010: 6016; --             JNEG  H_DONE
+0011: 1027; --             STORE REMAIND
+0012: 0829; --             LOAD  HUNDS
+0013: 3001; --             ADDI  1
+0014: 1029; --             STORE HUNDS
+0015: 580E; --             JUMP  H_LOOP
+0016: 0827; --             LOAD  REMAIND
+0017: 282D; --             SUB   C_10
+0018: 601E; --             JNEG  TE_DONE
+0019: 1027; --             STORE REMAIND
+001A: 082A; --             LOAD  TENS
+001B: 3001; --             ADDI  1
+001C: 102A; --             STORE TENS
+001D: 5816; --             JUMP  TE_LOOP
+001E: 0828; --             LOAD  THOUS
+001F: 5004; --             SHIFT 4
+0020: 2029; --             ADD   HUNDS
+0021: 5004; --             SHIFT 4
+0022: 202A; --             ADD   TENS
+0023: 5004; --             SHIFT 4
+0024: 2027; --             ADD   REMAIND
+0025: 9804; --             OUT   HEX_DISP  ; Update the physical 7-segment display
+0026: 5800; --             JUMP  POLL_ADC  ; Go back and read the ADC again
+0027: 0000; -- REMAIND:  DW 0
+0028: 0000; -- THOUS:    DW 0
+0029: 0000; -- HUNDS:    DW 0
+002A: 0000; -- TENS:     DW 0
+002B: 03E8; -- C_1000:   DW 1000
+002C: 0064; -- C_100:    DW 100
+002D: 000A; -- C_10:     DW 10
+[002E..07FF] : 0000; -- [empty memory]
 END;
-

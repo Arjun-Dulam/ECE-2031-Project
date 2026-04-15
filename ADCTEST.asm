@@ -1,0 +1,12 @@
+ORG 0
+Loop:
+IN &H0C1
+OUT &H005
+
+IN &H0C0
+OUT &H004
+
+JUMP Loop
+
+
+ADC: EQU &H0C0

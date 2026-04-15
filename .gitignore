@@ -1,0 +1,18 @@
+# Quartus build databases and reports
+/db/
+/incremental_db/
+/output_files/
+
+# Generated simulation exports
+/simulation/
+/PLL_main_sim/
+/PLL_main_sim.f
+
+# Quartus session / generated reports
+*.qws
+*.rpt
+*.summary
+*.smsg
+
+# Local backups
+*.bak
